@@ -20,9 +20,8 @@
 
         .board {
             display: grid;
-            grid-template-columns: repeat(5, 100px);
-            grid-template-rows: repeat(5, 100px);
-            gap: 5px; /* セル間の間隔 */
+            grid-template-columns: repeat(5, minmax(100px, 1fr)); /* スマートフォン画面に対応 */
+            gap: 5px;
         }
 
         .cell {
