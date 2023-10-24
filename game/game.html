@@ -55,6 +55,18 @@
             font-weight: bold;
             margin-top: 10px;
         }
+
+        /* スマートフォン用のスタイル */
+        @media (max-width: 500px) {
+            .board {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 100%;
+            }
+
+            .cell {
+                width: 33.33%;
+            }
+        }
     </style>
 </head>
 <body>
