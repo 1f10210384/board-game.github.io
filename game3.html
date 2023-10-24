@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陣取りゲーム盤面</title>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-image: url('wood-tiles.jpg'); /* 木のタイルの画像へのパス */
+        background-repeat: repeat; /* タイル状に背景画像を繰り返す */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        }
+
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(5, 100px);
+            grid-template-rows: repeat(5, 100px);
+            gap: 5px; /* セル間の間隔 */
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            border: none;
+            outline: none;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+
+        .cell img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        #color-indicator {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <button id="color-switch-button">切り替え</button>
+    <div class="board" id="game-board">
+        <!-- 5x5の盤面を作成 -->
+    </div>
+    <div id="color-indicator">現在の塗り: きのこ</div>
+    <script>
+        const board = document.getElementById('game-board');
+        let currentColor = 'red'; // 初期の色
+
+        // イメージをクリックして色を切り替える関数
+        function toggleColor(event) {
+            const img = event.target;
+
+            if (img.getAttribute('src') === currentColor + '.jpeg') {
+                img.setAttribute('src', 'white.jpeg'); // 同じ色なら透明な画像に切り替える
+            } else {
+                img.setAttribute('src', currentColor + '.jpeg'); // 画像を切り替える
+            }
+        }
+
+        // ボタンをクリックして色を切り替える
+        document.getElementById('color-switch-button').addEventListener('click', () => {
+            currentColor = currentColor === 'red' ? 'blue' : 'red';
+            updateColorIndicator();
+        });
+
+        // マスを生成
+        for (let i = 0; i < 25; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            const img = document.createElement('img');
+            img.setAttribute('src', 'white.jpeg'); // 初期は白の画像
+            img.addEventListener('click', toggleColor); // イメージをクリックすると色が切り替わる
+            cell.appendChild(img);
+            board.appendChild(cell);
+        }
+
+        // 3x3の正方形領域に同じ色のマスが存在するかを確認
+        function check3x3() {
+            const cells = board.getElementsByClassName('cell');
+            for (let i = 0; i <= 3; i++) {
+                for (let j = 0; j <= 3; j++) {
+                    let hasSameColor = true;
+                    for (let x = 0; x <= 2; x++) {
+                        for (let y = 0; y <= 2; y++) {
+                            const cellIndex = i * 5 + j + x * 5 + y;
+                            const img = cells[cellIndex].querySelector('img');
+                            if (img.getAttribute('src') !== currentColor + '.jpeg') {
+                                hasSameColor = false;
+                                break;
+                            }
+                        }
+                        if (!hasSameColor) {
+                            break;
+                        }
+                    }
+                    if (hasSameColor) {
+                        if (confirm('3x3の正方形領域に同じ色のマスが存在します。消去しますか？')) {
+                            for (let x = 0; x <= 2; x++) {
+                                for (let y = 0; y <= 2; y++) {
+                                    const cellIndex = i * 5 + j + x * 5 + y;
+                                    const img = cells[cellIndex].querySelector('img');
+                                    img.setAttribute('src', 'white.jpeg');
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // 色表示を更新
+        function updateColorIndicator() {
+            const indicator = document.getElementById('color-indicator');
+            indicator.textContent = `現在の塗り: ${currentColor === 'red' ? 'きのこ' : 'たけのこ'}`;
+        }
+
+        // マスをクリックするたびに3x3の領域をチェック
+        board.addEventListener('click', check3x3);
+
+        updateColorIndicator(); // 初期の色を表示
+
+    </script>
+</body>
+</html>
