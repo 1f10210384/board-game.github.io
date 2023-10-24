@@ -59,12 +59,14 @@
         /* スマートフォン用のスタイル */
         @media (max-width: 500px) {
             .board {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(5, 100px);
                 max-width: 100%;
+                gap: 1px;
             }
 
             .cell {
-                width: 33.33%;
+                width: 60%;
+                height: 60%;
             }
         }
     </style>
