@@ -78,6 +78,10 @@
         <!-- 5x5の盤面を作成 -->
     </div>
     <div id="color-indicator">現在の塗り: きのこ</div>
+    <div id="turn-counter">
+        <p>ターン数: <span id="turn-count">0</span></p>
+        <button id="increment-turn-button">ターン+1</button>
+    </div>
     <script>
         const board = document.getElementById('game-board');
         let currentColor = 'red'; // 初期の色
@@ -154,6 +158,18 @@
         board.addEventListener('click', check3x3);
 
         updateColorIndicator(); // 初期の色を表示
+
+        let turnCount = 0; // 初期のターン数
+
+        // ターンをカウントアップする関数
+        function incrementTurn() {
+            turnCount++;
+            document.getElementById('turn-count').textContent = turnCount;
+        }
+
+        // ボタンをクリックしてターンを増やす
+        document.getElementById('increment-turn-button').addEventListener('click', incrementTurn);
+
 
     </script>
 </body>
