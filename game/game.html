@@ -82,6 +82,7 @@
         <p>ターン数: <span id="turn-count">0</span></p>
         <button id="increment-turn-button">ターン+1</button>
     </div>
+    <audio id="bg-music" src="game/Quiz-Correct_Answer02-1.mp3" preload="auto" loop></audio>
     <script>
         const board = document.getElementById('game-board');
         let currentColor = 'red'; // 初期の色
@@ -95,6 +96,11 @@
             } else {
                 img.setAttribute('src', currentColor + '.jpeg'); // 画像を切り替える
             }
+        }
+
+        function playSound() {
+            const audio = document.getElementById('bg-music');
+            audio.play();
         }
 
         // ボタンをクリックして色を切り替える
@@ -135,6 +141,7 @@
                     }
                     if (hasSameColor) {
                         if (confirm('3x3の正方形領域に同じ色のマスが存在します。消去しますか？')) {
+                            playSound();
                             for (let x = 0; x <= 2; x++) {
                                 for (let y = 0; y <= 2; y++) {
                                     const cellIndex = i * 5 + j + x * 5 + y;
