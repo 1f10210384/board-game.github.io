@@ -78,7 +78,7 @@
     <div class="board" id="game-board">
         <!-- 5x5の盤面を作成 -->
     </div>
-    <div id="color-indicator">現在の塗り: ピンク</div>
+    <div id="color-indicator">現在の塗り: 白</div>
     <div id="turn-counter">
         <p>ターン数: <span id="turn-count" style="font-weight: bold; color: #ff0000;">0</span></p>
         <button id="increment-turn-button">ターン+1</button>
@@ -86,16 +86,16 @@
     <audio id="bg-music" src="game/Quiz-Correct_Answer02-1.mp3" preload="auto"></audio>
     <script>
         const board = document.getElementById('game-board');
-        let currentColor = 'red'; // 初期の色
+        let currentColor = 'circle-1'; // 初期の色
 
         // イメージをクリックして色を切り替える関数
         function toggleColor(event) {
             const img = event.target;
 
-            if (img.getAttribute('src') === currentColor + '.jpeg') {
+            if (img.getAttribute('src') === currentColor + '.jpg') {
                 img.setAttribute('src', 'white.jpeg'); // 同じ色なら透明な画像に切り替える
             } else {
-                img.setAttribute('src', currentColor + '.jpeg'); // 画像を切り替える
+                img.setAttribute('src', currentColor + '.jpg'); // 画像を切り替える
             }
         }
 
@@ -107,7 +107,7 @@
 
         // ボタンをクリックして色を切り替える
         document.getElementById('color-switch-button').addEventListener('click', () => {
-            currentColor = currentColor === 'red' ? 'yellow' : 'red';
+            currentColor = currentColor === 'circle-1' ? 'circle-2' : 'circle-1';
             updateColorIndicator();
         });
 
@@ -132,7 +132,7 @@
                         for (let y = 0; y <= 2; y++) {
                             const cellIndex = i * 5 + j + x * 5 + y;
                             const img = cells[cellIndex].querySelector('img');
-                            if (img.getAttribute('src') !== currentColor + '.jpeg') {
+                            if (img.getAttribute('src') !== currentColor + '.jpg') {
                                 hasSameColor = false;
                                 break;
                             }
@@ -160,7 +160,7 @@
         // 色表示を更新
         function updateColorIndicator() {
             const indicator = document.getElementById('color-indicator');
-            indicator.textContent = `現在の塗り: ${currentColor === 'red' ? 'ピンク' : 'イエロー'}`;
+            indicator.textContent = `現在の塗り: ${currentColor === 'circle-1' ? '白' : '黒'}`;
         }
 
         // マスをクリックするたびに3x3の領域をチェック
